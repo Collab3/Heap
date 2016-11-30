@@ -15,16 +15,16 @@ void heap::insert(int value){
 }
 
 void heap::insert_helper(int index){
-  int parent = buffer[index/2];
   int temp;
-  if(buffer[index] == 0 ||buffer[index] == 1){
+  if(buffer[index] == 0 || buffer[index] == 1){
     return;
   }
-  if(parent < buffer[index]){ //parent is less than inserted value
-    temp = parent;
-    parent = buffer[index];
-    buffer[index] = temp;
-    insert_helper(index/2);
+  if(buffer[index] >= buffer[index/2]){ //buffer[index] > than its parent
+    temp = buffer[index];
+    buffer[index] = buffer[index/2];
+    buffer[index/2] = temp;
+    cout << "swap " << temp << " with " << buffer[index] << endl;
+    insert_helper(buffer[index]);
   }
 }
 
@@ -33,7 +33,7 @@ void heap::remove_max(){
 }
 
 int heap::max(){
-  return 0;
+  return buffer[1];
 }
 
 void heap::print(){
