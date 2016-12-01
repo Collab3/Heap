@@ -1,3 +1,4 @@
+
 #ifndef HEAP_H
 #define HEAP_H
 
@@ -17,6 +18,7 @@ class heap{
   int size();
   void insert(int value);
   void insert_helper(int index);
+  void remove_helper(int index);
   void remove_max();
   int max();
   void print();

@@ -1,8 +1,7 @@
 #include "heap.h"
 
 heap::heap(){
-  buffer.reserve(2);
-  buffer[0] = 0;
+  buffer.push_back(0);
 }
 
 int heap::size(){
@@ -16,20 +15,48 @@ void heap::insert(int value){
 
 void heap::insert_helper(int index){
   int temp;
-  if(buffer[index] == 0 || buffer[index] == 1){
-    return;
-  }
-  if(buffer[index] >= buffer[index/2]){ //buffer[index] > than its parent
-    temp = buffer[index];
-    buffer[index] = buffer[index/2];
-    buffer[index/2] = temp;
-    cout << "swap " << temp << " with " << buffer[index] << endl;
-    insert_helper(buffer[index]);
+  if(index > 1){
+    if(buffer[index] > buffer[index/2]){ //buffer[index] > than its parent
+      temp = buffer[index];
+      buffer[index] = buffer[index/2];
+      buffer[index/2] = temp;
+      insert_helper(index/2);
+    }
   }
 }
 
 void heap::remove_max(){
+  int temp;
+  temp = buffer[1];
+  buffer[1] = buffer[size()];
+  buffer[size()] = temp;
+  buffer.pop_back();
+  remove_helper(1);
+}
 
+void heap::remove_helper(int index){
+  int temp;
+  if(index > size()){
+    return;
+  }
+  else{
+    if(buffer[index] < buffer[index*2] && buffer[index] > buffer[index*2+1]){
+      temp = buffer[index];
+      buffer[index] = buffer[index*2];
+      buffer[index*2] = temp;
+      remove_helper(index+1);
+      insert_helper(index);
+    }
+    else if(buffer[index] < buffer[index*2+1] && buffer[index] > buffer[index*2]){
+      temp = buffer[index];
+      buffer[index] = buffer[index*2+1];
+      buffer[index*2+1] = temp;
+      remove_helper(index+1);
+      insert_helper(index);
+    }
+    else if(buffer[index] < buffer[index*2+1
+  }
+  
 }
 
 int heap::max(){
